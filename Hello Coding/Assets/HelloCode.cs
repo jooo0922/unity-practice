@@ -9,10 +9,4 @@ public class HelloCode : MonoBehaviour
     {
         
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
