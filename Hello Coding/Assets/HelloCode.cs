@@ -7,7 +7,7 @@ public class HelloCode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int love = 100;
+        int love = 50;
 
         if (love > 70)
         {
