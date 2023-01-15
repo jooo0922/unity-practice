@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow) == true)
         {
             // 왼쪽 방향키 입력이 감지된 경우 -x 방향 힘 주기
-            playerRigidbody.AddForce(speed, 0f, 0f);
+            playerRigidbody.AddForce(-speed, 0f, 0f);
         }
     }
 
