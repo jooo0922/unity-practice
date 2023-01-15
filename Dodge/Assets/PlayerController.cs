@@ -38,4 +38,10 @@ public class PlayerController : MonoBehaviour
             playerRigidbody.AddForce(speed, 0f, 0f);
         }
     }
+
+    public void Die()
+    {
+        // 자신의 게임 오브젝트를 비활성화 (게임 오브젝트의 Inspector 창에서 체크박스 해제하는 것과 동일한 역할)
+        gameObject.SetActive(false);
+    }
 }
