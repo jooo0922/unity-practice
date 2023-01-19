@@ -16,29 +16,22 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.UpArrow) == true)
-        {
-            // 위쪽 방향키 입력이 감지된 경우 z 방향 힘 주기
-            playerRigidbody.AddForce(0f, 0f, speed);
-        }
+        // 수평축 (왼쪽 / 오른쪽 방향키 또는 A / D)과 수직축 (위쪽 / 아래쪽 방향키 또는 W / S)의 입력값을 감지하여 저장
+        float xInput = Input.GetAxis("Horizontal");
+        float zInput = Input.GetAxis("Vertical");
 
-        if (Input.GetKey(KeyCode.DownArrow) == true)
-        {
-            // 아래쪽 방향키 입력이 감지된 경우 -z 방향 힘 주기
-            playerRigidbody.AddForce(0f, 0f, -speed);
-        }
+        // 실제 이동 속도를 입력값과 이동 속력을 사용해서 계산
+        // xInput 과 zInput 값은 일종의 방향을 결정하는 방향값 역할!
+        float xSpeed = xInput * speed;
+        float zSpeed = zInput * speed;
 
-        if (Input.GetKey(KeyCode.RightArrow) == true)
-        {
-            // 오른쪽 방향키 입력이 감지된 경우 x 방향 힘 주기
-            playerRigidbody.AddForce(speed, 0f, 0f);
-        }
+        // Vector3 속도를 (xSpeed, 0, zSpeed)로 생성
+        Vector3 newVelocity = new Vector3(xSpeed, 0f, zSpeed);
 
-        if (Input.GetKey(KeyCode.LeftArrow) == true)
-        {
-            // 왼쪽 방향키 입력이 감지된 경우 -x 방향 힘 주기
-            playerRigidbody.AddForce(-speed, 0f, 0f);
-        }
+        // 리지드바디의 속도에 newVelocity 할당
+        // AddForce() 와의 차이점 -> AddForce() 는 가속도가 붙는 개념이라 관성이 적용되고 조작이 무겁게 느껴짐
+        // 반면, Rigidbody.velocity 는 이전 속도를 지우고 새로운 속도를 override 하는 개념이라 속도가 즉시 변경되는 차이가 있음!
+        playerRigidbody.velocity = newVelocity;
     }
 
     public void Die()
