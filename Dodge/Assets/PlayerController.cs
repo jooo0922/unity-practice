@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Rigidbody playerRigidbody; // 이동에 사용할 리지드바디 컴포넌트
+    private Rigidbody playerRigidbody; // 리지드바디 컴포넌트 private 으로 지정 -> 더 이상 인스펙터 창에서 드래&드롭으로 가져오지 않을거기 때문!
     public float speed = 8f; // 이동 속력
 
     void Start()
     {
-        
+        // 게임 오브젝트에서 Rigidbody 컴포넌트를 찾아 playerRigidbody 멤버변수에 코드로 직접 할당!
+        // 제네릭을 사용해서 컴포넌트 타입마다 별도의 게터 메서드를 생성하지 않아도 하나의 GetComponent() 로 대응할 수 있도록 함!
+        playerRigidbody = GetComponent<Rigidbody>();
     }
 
     void Update()
