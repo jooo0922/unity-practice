@@ -49,6 +49,9 @@ public class GameManager : MonoBehaviour
     // 현재 게임을 게임오버 상태로 변경하는 메서드 (상태값 변경 메서드) -> 일단 메서드 선언만 해둠
     public void EndGame()
     {
-
+        // 현재 상태를 게임오버 상태로 전환
+        isGameover = true;
+        // 게임오버 텍스트 게임 오브젝트를 활성화 -> 안보였던 상태에서 보이는 상태로 바꾸는 것!
+        gameoverText.SetActive(true);
     }
 }
