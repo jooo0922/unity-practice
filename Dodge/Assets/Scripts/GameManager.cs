@@ -34,6 +34,16 @@ public class GameManager : MonoBehaviour
             // 형변환을 해준 이유는, float 실수 타입은 소수점이 길이서, 이 긴 숫자들이 전부 화면에 표시되지 않도록 정수형으로 끊어서 표시하려는 것임.
             timeText.text = "Time: " + (int)surviveTime;
         }
+        else
+        {
+            // 게임오버 상태에서 R키를 누른 순간 아래의 if block 실행
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                // 현재 활성화된 씬을 제거해버리고, SampleScene 이라는 이름으로 빌드목록에 등록된 씬을 로드함.
+                // 참고로 SceneManager.LoadScene() 은 UnityEngine.SceneManagement 모듈에서 가져올 수 있는 메서드임.
+                SceneManager.LoadScene("SampleScene");
+            }
+        }
     }
 
     // 현재 게임을 게임오버 상태로 변경하는 메서드 (상태값 변경 메서드) -> 일단 메서드 선언만 해둠
