@@ -1499,9 +1499,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3585d4174d54945638c30a2979898870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameoverText: {fileID: 0}
-  timeText: {fileID: 0}
-  recordText: {fileID: 0}
+  gameoverText: {fileID: 1545311591}
+  timeText: {fileID: 1378299167}
+  recordText: {fileID: 734054057}
 --- !u!1 &2025389262
 GameObject:
   m_ObjectHideFlags: 0
