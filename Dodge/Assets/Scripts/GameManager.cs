@@ -53,5 +53,21 @@ public class GameManager : MonoBehaviour
         isGameover = true;
         // 게임오버 텍스트 게임 오브젝트를 활성화 -> 안보였던 상태에서 보이는 상태로 바꾸는 것!
         gameoverText.SetActive(true);
+
+        // BestTime 라는 key 를 갖고 있는 키-값 행을 찾아 value 를 할당함. 저장된 키-값 행이 없다면 0이 할당 -> 이전까지의 최고 기록 
+        float bestTime = PlayerPrefs.GetFloat("BestTime");
+
+        if (surviveTime > bestTime)
+        {
+            // 현재까지의 생존시간이 이전까지의 최고기록보다 크다면, bestTime 변수의 값을 현재까지의 생존시간 값인 surviveTime 으로 업데이트함.
+            bestTime = surviveTime;
+
+            // 변경된 최고기록 값을 "BestTime" 키-값 행에 value 로 저장
+            PlayerPrefs.SetFloat("BestTime", bestTime);
+        }
+
+        // 최고기록을 recordText 게임 오브젝트 > 텍스트 컴포넌트 > 텍스트 필드에 할당
+        // float 타입의 bestTime 값을 정수형으로 형변환 후 할당
+        recordText.text = "Best Time: " + (int)bestTime;
     }
 }
