@@ -38,5 +38,10 @@ public class PlayerController : MonoBehaviour
     {
         // 자신의 게임 오브젝트를 비활성화 (게임 오브젝트의 Inspector 창에서 체크박스 해제하는 것과 동일한 역할)
         gameObject.SetActive(false);
+
+        // 씬에 존재하는 GameManager 타입의 오브젝트를 찾아 가져옴.
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        // GameManager 오브젝트의 EndGame() 메서드 실행 -> PlayerController.Die() 실행 시, 자동으로 GameManager.EndGame() 도 실행되겠군!
+        gameManager.EndGame();
     }
 }
