@@ -61,7 +61,9 @@ public class Move : MonoBehaviour
 // 유니티의 '지역공간' 이 갖는 두 가지 의미
 //
 // 1. 게임 오브젝트의 위치, 각도, 스케일값 변경 시, (인스펙터 창 또는 코드의 Transform.position / .rotation / .scale)
-// 게임 오브젝트의 '지역공간'(부모 오브젝트의 상대적 좌표) 기준으로 변경되고,
+// 게임 오브젝트의 '지역공간'(부모 오브젝트의 상대적 좌표) 또는 '전역공간' 기준으로 변경되고,
+// ex> 게임 오브젝트의 지역공간 기준 좌표 변경 -> transform.localPosition = new Vector3(~~) 또는 인스펙터 창의 Transform 컴포넌트에서 Position 값 변경.
+// 게임 오브젝트를 전역공간 기준으로 좌표 변경 -> transform.position = new Vector3(~~)
 //
 // 2. 게임 오브젝트의 평행이동, 회전 적용 시, (Local 모드에서 평행이동 툴, 회전 툴 사용 또는 Transform.Translate() / .Rotate())
 // 게임 오브젝트의 '오브젝트 공간'(게임 오브젝트 자신의 상대적 좌표) 기준으로 변경됨.
