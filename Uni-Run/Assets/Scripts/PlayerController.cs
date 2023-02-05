@@ -14,7 +14,10 @@ public class PlayerController : MonoBehaviour {
    private AudioSource playerAudio; // 사용할 오디오 소스 컴포넌트
 
    private void Start() {
-       // 초기화
+        // 게임 오브젝트로부터 사용할 컴포넌트들을 가져와 멤버변수에 할당
+        playerRigidbody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        playerAudio = GetComponent<AudioSource>();
    }
 
    private void Update() {
