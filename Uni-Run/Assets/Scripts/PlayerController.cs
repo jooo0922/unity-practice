@@ -73,6 +73,12 @@ public class PlayerController : MonoBehaviour {
 
    private void OnTriggerEnter2D(Collider2D other) {
        // 트리거 콜라이더를 가진 장애물과의 충돌을 감지
+       if (other.tag == "Dead" && !isDead)
+        {
+            // 충돌한 상대방 게임 오브젝트의 태그가 "Dead" 이고, (데드존과 장애물 게임 오브젝트의 태그를 Dead 로 설정할 예정)
+            // 현재 사망상태가 아직 사망하지 않았다면, Die() 메서드 실행해서 사망처리함.
+            Die();
+        }
    }
 
    private void OnCollisionEnter2D(Collision2D collision) {
