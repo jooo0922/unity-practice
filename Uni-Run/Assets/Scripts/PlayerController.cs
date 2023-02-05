@@ -22,6 +22,35 @@ public class PlayerController : MonoBehaviour {
 
    private void Update() {
        // 사용자 입력을 감지하고 점프하는 처리
+       if (isDead)
+        {
+            // 사망 시 현재의 Update() 루프 처리를 중단
+            return;
+        }
+
+       // 마우스 왼쪽 버튼 누른 시점 && 현재까지의 누적 점프 횟수가 아직은 2보다 작은 시점 (최대 점프 횟수 = 2)
+       if (Input.GetMouseButtonDown(0) && jumpCount < 2)
+        {
+            // 누적 점프 횟수 증가시킴
+            jumpCount++;
+            // 점프 직전 리지드바디 속도를 제로(0, 0)으로 초기화 -> 기존에 남아있는 다른 힘(속력)과 상쇄를 막기 위해 점프 직전 속도 초기화
+            playerRigidbody.velocity = Vector2.zero; // Vector2.zero = (0, 0)
+            // 리지드바디에 y축으로 가속도 주기 -> 점프 실행
+            playerRigidbody.AddForce(new Vector2(0, jumpForce));
+            // 오디오 소스 재생 -> 오디오 소스 컴포넌트의 Play() 메서드는 해당 컴포넌트에 할당된 오디오 클립을 재생함
+            playerAudio.Play();
+        } else if (Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0)
+        {
+            // 마우스 왼쪽 버튼에서 손을 뗀 시점 && 현재 Player 게임 오브젝트 속도가 0보다 큰 시점 -> 즉, 점프 중인 시점 (0보다 작으면 낙하 중인 시점이겠지?)일 때,
+            // 현재 속도를 절반으로 감속시킴 -> 오래 누를수록 점프 속도 감속이 지연되겠네 -> 오래 누를수록 점프 높이 증가
+            // 또, 낙하 시점에는 감속이 되면 낙하가 느려지므로, 이거는 이상하잖아? 그러니까 낙하 시점에는 감속 로직을 실행하지 않으려는 것!
+            playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
+        }
+
+        // 애니메이터 컴포넌트의 Grounded 파라미터를 계속 업데이트시킴
+        // false 로 할당시키면 Grounded 가 false 인 전이조건 달성하여 Run -> Jump 로 상태 전이
+        // true 로 할당시키면 Grounded 가 true 인 전이조건 달성하여 Jump -> Run 로 상태 전이
+        animator.SetBool("Grounded", isGrounded);
    }
 
    private void Die() {
