@@ -82,10 +82,22 @@ public class PlayerController : MonoBehaviour {
    }
 
    private void OnCollisionEnter2D(Collision2D collision) {
-       // 바닥에 닿았음을 감지하는 처리
+       // 일반 콜라이더와 충돌하는 순간 최초로 발생하는 이벤트 메서드
+       // 어떤 콜라이더와 닿았는데, 첫 번째 충돌한 지점의 표면 방향이 45도 정도의 경사 이상으로 위쪽을 향하는 경우
+       // 충돌 표면의 노멀벡터 y값이 0.7 이상이라면, 노말벡터의 각도가 45도 이상 위쪽으로 기울어져 있다는 뜻임! -> 바닥에 닿은 상태!
+       // (y값이 0에 가까우면 절벽, -1에 가까우면 천장과 충돌했다는 뜻임!)
+       if (collision.contacts[0].normal.y > 0.7)
+        {
+            // Player 게임 오브젝트가 바닥에 닿은 상태이므로, 땅에 있는지의 여부인 isGrounded 를 true 로 바꿔주고,
+            // 이제 점프하지 않으므로, jumpCount 를 0으로 초기화함.
+            isGrounded = false;
+            jumpCount = 0;
+        }
    }
 
    private void OnCollisionExit2D(Collision2D collision) {
-       // 바닥에서 벗어났음을 감지하는 처리
+        // 일반 콜라이더와 떼어지는 순간 최초로 발생하는 이벤트 메서드
+        // Player 게임 오브젝트가 바닥에서 떨어진 상태이므로 (즉, 점프한 상태이므로), 땅에 있는지 여부인 isGrounded 를 false 로 바꿔줌. 
+        isGrounded = false;
    }
 }
