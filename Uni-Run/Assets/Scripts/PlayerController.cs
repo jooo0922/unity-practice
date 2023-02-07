@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour {
         {
             // Player 게임 오브젝트가 바닥에 닿은 상태이므로, 땅에 있는지의 여부인 isGrounded 를 true 로 바꿔주고,
             // 이제 점프하지 않으므로, jumpCount 를 0으로 초기화함.
-            isGrounded = false;
+            isGrounded = true;
             jumpCount = 0;
         }
    }
