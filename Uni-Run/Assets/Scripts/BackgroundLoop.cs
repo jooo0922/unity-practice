@@ -24,6 +24,13 @@ public class BackgroundLoop : MonoBehaviour {
 
     // 위치를 리셋하는 메서드
     private void Reposition() {
-        
+        // 현재 위치에서 오른쪽으로 width * 2 만큼 순간이동하는 로직
+        Vector2 offset = new Vector2(width * 2f, 0); // 현재 위치에서 얼마나 오른쪽으로 이동할건지 거리를 정의한 Vector2 변수
+
+        // 여기서 서로 다른 두 타입의 변수 Vector2 와 Vector3 를 가지고 연산을 하고 있는데,
+        // 1. 첫 번째 연산인 Vector3 + Vector2 덧셈 연산은 Vector3 인 transform.position 을 반드시 Vector2 로 형변환해준 뒤 연산해줘야 함.
+        // 2. 두 번째 연산인 Vector3 변수 = Vector2 결과값 할당은 transform.position 을 명시적으로 형변환해줄 필요는 없음.
+        // 결론을 요약하면, 덧셈 연산은 형변환 필수, 할당은 형변환 필수는 아니다!
+        transform.position = (Vector2)transform.position + offset;
     }
 }
