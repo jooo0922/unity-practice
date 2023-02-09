@@ -15,6 +15,11 @@ public class BackgroundLoop : MonoBehaviour {
 
     private void Update() {
         // 현재 위치가 원점에서 왼쪽으로 width 이상 이동했을때 위치를 리셋
+        // 매 프레임마다 -width 보다 x축 좌표값이 더 왼쪽으로 이동한 상태인지 검사함
+        if (transform.position.x <= -width)
+        {
+            Reposition(); // 게임 오브젝트의 position (부모 오브젝트 기준의 지역공간 좌표)를 width 로 순간이동 시키는 메서드 실행
+        }
     }
 
     // 위치를 리셋하는 메서드
