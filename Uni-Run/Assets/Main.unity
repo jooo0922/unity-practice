@@ -1425,8 +1425,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGameover: 0
-  scoreText: {fileID: 0}
-  gameoverUI: {fileID: 0}
+  scoreText: {fileID: 575173525}
+  gameoverUI: {fileID: 1173034213}
 --- !u!1 &2114103881
 GameObject:
   m_ObjectHideFlags: 0
