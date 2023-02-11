@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance; // 싱글톤을 할당할 전역 변수
 
     public bool isGameover = false; // 게임 오버 상태
-    public Text scoreText; // 점수를 출력할 UI 텍스트
-    public GameObject gameoverUI; // 게임 오버시 활성화 할 UI 게임 오브젝트
+    public Text scoreText; // 점수를 출력할 UI 게임 오브젝트의 텍스트 컴포넌트 (public 이니까 인스펙터 창에서 참조값 할당하겠지?)
+    public GameObject gameoverUI; // 게임 오버시 활성화 할 UI 게임 오브젝트 (public 이니까 인스펙터 창에서 참조값 할당하겠지?)
 
     private int score = 0; // 게임 점수
 
@@ -47,7 +47,12 @@ public class GameManager : MonoBehaviour {
 
     // 점수를 증가시키는 메서드
     public void AddScore(int newScore) {
-        
+        // 게임오버 상태가 아닐 때에만 점수를 갱신
+        if (!isGameover)
+        {
+            score += newScore; // 게임점수 멤버변수에 인자로 전달받은 추가점수를 더함
+            scoreText.text = "Score : " + score; // 점수 출력 UI 게임 오브젝트 > 텍스트 컴포넌트 > 텍스트 필드(멤버변수) 에 갱신된 점수로 출력 텍스트 생성
+        }
     }
 
     // 플레이어 캐릭터가 사망시 게임 오버를 실행하는 메서드
