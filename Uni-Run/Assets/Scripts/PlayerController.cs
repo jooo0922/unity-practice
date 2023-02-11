@@ -69,6 +69,9 @@ public class PlayerController : MonoBehaviour {
 
         // 사망상태를 나타내는 멤버변수를 true 로 변경
         isDead = true;
+
+        // 게임 매니저 오브젝트에서 전역으로 접근 가능한 싱글턴 인스턴스 .instance 에 접근해 OnPlayerDead() 메서드 실행 -> 게임오버 처리
+        GameManager.instance.OnPlayerDead();
    }
 
    private void OnTriggerEnter2D(Collider2D other) {
