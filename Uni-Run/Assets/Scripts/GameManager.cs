@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour {
 
     // 플레이어 캐릭터가 사망시 게임 오버를 실행하는 메서드
     public void OnPlayerDead() {
-        
+        isGameover = true; // 게임오버 상태를 true 로 변경
+        gameoverUI.SetActive(true); // 게임오버 UI 게임오브젝트를 활성화 (인스펙터 창에서 비활성화 해뒀었지?)
     }
 }
