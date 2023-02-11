@@ -34,6 +34,15 @@ public class GameManager : MonoBehaviour {
 
     void Update() {
         // 게임 오버 상태에서 게임을 재시작할 수 있게 하는 처리
+        // 현재 게임오버 상태이고, 왼쪽 마우스 버튼을 클릭한 시점이라면, if block 실행!
+        if (isGameover && Input.GetMouseButtonDown(0))
+        {
+            // SceneManager.LoadScene("씬 이름"); 은 빌드 목록에 등록된 씬의 이름을 받아, 현재까지 남아있는 해당 씬을 파괴한 뒤, 다시 로드함.
+            // SceneManager.GetActiveScene() 은 현재 활성화된 씬의 정보를 Scene 타입의 오브젝트로 반환함.
+            // SceneManager.GetActiveScene().name 변수애는 현재 활성화된 씬의 이름이 담겨있음
+            // 정리하면, 현재 활성화되어 있는 씬을 파괴했다가, 다시 로드해서 복구시키는 것 -> 게임 재시작!
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     // 점수를 증가시키는 메서드
