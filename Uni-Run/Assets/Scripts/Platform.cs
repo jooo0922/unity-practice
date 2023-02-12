@@ -31,5 +31,12 @@ public class Platform : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision) {
         // 플레이어 캐릭터가 자신을 밟았을때 점수를 추가하는 처리
+        // 충돌한 상대방 게임 오브젝트의 태그가 Player 이고, (Player 게임 오브젝트의 인스펙터 창에서 설정해놨음!)
+        // 발판 중복 밟힘에 의한 점수 중복 추가 방지를 위해 stepped 가 아직 밟히지 않은 상태인지 체크
+        if (collision.collider.tag == "Player" && !stepped)
+        {
+            stepped = true; // 밟힘 상태를 true 로 체크해서 다음번 중복 밟힘에 의한 점수 중복 추가 버그를 방지
+            GameManager.instance.AddScore(1); // GameManager 오브젝트의 싱글턴 인스턴스 정적 멤버변수에 접근해서, 점수를 추가해서 점수 UI 게임 오브젝트를 갱신하는 메서드 실행
+        }
     }
 }
