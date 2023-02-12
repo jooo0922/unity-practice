@@ -41,5 +41,42 @@ public class PlatformSpawner : MonoBehaviour {
 
     void Update() {
         // 순서를 돌아가며 주기적으로 발판을 배치
+        // 게임오버 상태에서는 동작하지 않도록, 싱글턴 GameManager 오브젝트의 instance 멤버변수로부터 게임오버 상태값 검사
+        if (GameManager.instance.isGameover)
+        {
+            return;
+        }
+
+        // 현재 시점이 (마지막 발판 배치 시점 + 랜덤한 발판 배치 시간 간격) 과 같거나 그것보다 지났으면 발판 재배치 로직 실행
+        if (Time.time >= lastSpawnTime + timeBetSpawn)
+        {
+            // 마지막 발판 배치 시점을 현재 시점으로 업데이트 (이제 발판을 새로 배치할거니까!)
+            lastSpawnTime = Time.time;
+
+            // 다음 발판 배치 시간 간격을 랜덤하게 설정
+            timeBetSpawn = Random.Range(timeBetSpawnMin, timeBetSpawnMax);
+
+            // 발판 배치 높이 랜덤 설정
+            float yPos = Random.Range(yMin, yMax);
+
+            // 이번에 배치할 순번에 해당하는 발판 게임 오브젝트를 Start() 메서드에서 생성한 발판 게임 오브젝트 배열에서 가져온 뒤,
+            // 게임 오브젝트 비활성화 > 다시 활성화. 즉, 게임 오브젝트를 껏다 킴.
+            // 이로 인해 발판 게임 오브젝트의 Platform 스크립트 컴포넌트가 따라서 비활성화 > 다시 활성화 되면서
+            // OnEnable() 이벤트 메서드가 실행됨 -> 발판 게임 오브젝트의 상태를 리셋시킴!
+            platforms[currentIndex].SetActive(false);
+            platforms[currentIndex].SetActive(true);
+
+            // 이번에 배치할 순번의 발판 게임 오브젝트를 화면 오른쪽에 재배치 (재배치 높이값은 랜덤!)
+            platforms[currentIndex].transform.position = new Vector2(xPos, yPos);
+
+            // 재배치할 발판 게임 오브젝트의 순번을 증가시켜서 다음 재배치할 때 사용하도록 함.
+            currentIndex++;
+
+            // 재배치할 발판 게임 오브젝트의 순번이 마지막 순번에 도달했다면, 맨 첫 번째 순번인 0번으로 초기화함
+            if (currentIndex >= count)
+            {
+                currentIndex = 0;
+            }
+        }
     }
 }
