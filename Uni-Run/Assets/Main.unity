@@ -1471,7 +1471,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3925495abad4c798bedcc50b89dc29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformPrefab: {fileID: 0}
+  platformPrefab: {fileID: 1671242928466520, guid: f9fc9d007ca214ed9ad2949a47f59fb5,
+    type: 3}
   count: 3
   timeBetSpawnMin: 1.25
   timeBetSpawnMax: 2.25
