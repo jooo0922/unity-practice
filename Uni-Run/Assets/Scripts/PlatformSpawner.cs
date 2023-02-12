@@ -22,6 +22,21 @@ public class PlatformSpawner : MonoBehaviour {
 
     void Start() {
         // 변수들을 초기화하고 사용할 발판들을 미리 생성
+        // count 만큼의 공간을 갖는 발판 게임 오브젝트를 담아둘 배열 생성
+        platforms = new GameObject[count];
+
+        // count 만큼 루프를 돌면서 오브젝트 풀에 담아둘 발판 게임 오브젝트 생성 및 platforms 배열에 할당
+        for (int i = 0; i < count; i++)
+        {
+            // 발판 원본 프리팹으로부터 복제된 게임 오브젝트 인스턴스를 생성하여 배열에 추가
+            // 참고로, 복제된 게임 오브젝트의 회전값을 설정하는 세 번째 인자는 쿼터니언 타입이 들어가야 함.
+            // 근데, Quaternion.identity 는 뭘까? 이거는 오일러 각으로 변환하면 (0, 0, 0) 회전값과 동일하다고 함!
+            platforms[i] = Instantiate(platformPrefab, poolPosition, Quaternion.identity);
+        }
+
+        // 맨 처음 배치되는 발판은 지연시간 없이 즉시 배치하기 위해 최근 재배치 시점과 배치 시간간격 변수를 모두 0으로 초기화함
+        lastSpawnTime = 0f;
+        timeBetSpawn = 0f;
     }
 
     void Update() {
