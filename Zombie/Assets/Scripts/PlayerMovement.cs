@@ -36,7 +36,13 @@ public class PlayerMovement : MonoBehaviour {
 
     // 입력값에 따라 캐릭터를 앞뒤로 움직임
     private void Move() {
+        // 상대적으로 이동할 거리 계산
+        // 정방향 / 반대방향 / 정지 여부 * 플레이어의 오브젝트공간 좌표계 기준 앞쪽방향 * 이동 속력 * 한 프레임 기준 이동거리로 변환하는 델타타임값
+        Vector3 moveDistance = playerInput.move * transform.forward * moveSpeed * Time.deltaTime;
 
+        // 리지드바디 컴포넌트의 MovePosition() 메서드로 플레이어 게임 오브젝트의 전역위치 변경 (물리처리 적용하며 위치 변경)
+        // 리지드바.MovePosition(이동하고자 하는 전역위치 Vector3 값) -> MovePosition(현재 위치 + 상대적으로 더 이동할 거리)
+        playerRigidbody.MovePosition(playerRigidbody.position + moveDistance);
     }
 
     // 입력값에 따라 캐릭터를 좌우로 회전
