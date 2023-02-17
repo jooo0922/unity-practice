@@ -413,6 +413,12 @@ MonoBehaviour:
   rotateAxisName: Horizontal
   fireButtonName: Fire1
   reloadButtonName: Reload
+--- !u!4 &1015240218 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 98cdee121d6e440de9fb99a7c24fa0da,
+    type: 3}
+  m_PrefabInstance: {fileID: 1015240210}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1064046904
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,8 +454,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_LookAt: {fileID: 1015240218}
+  m_Follow: {fileID: 1015240218}
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 5
@@ -475,8 +481,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064046904}
-  m_LocalRotation: {x: 0.046214256, y: -0.9488604, z: 0.1656245, w: 0.26475796}
-  m_LocalPosition: {x: 1.0506465, y: 1.6598811, z: 1.7327799}
+  m_LocalRotation: {x: 2.524355e-29, y: -2.019484e-28, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -561,8 +567,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430577953}
-  m_LocalRotation: {x: 0.046214256, y: -0.9488604, z: 0.1656245, w: 0.26475796}
-  m_LocalPosition: {x: 1.0506465, y: 1.6598811, z: 1.7327799}
+  m_LocalRotation: {x: 2.524355e-29, y: -2.019484e-28, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
