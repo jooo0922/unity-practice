@@ -12,6 +12,9 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Start() {
         // 사용할 컴포넌트들의 참조를 가져오기
+        playerInput = GetComponent<PlayerInput>();
+        playerRigidbody = GetComponent<Rigidbody>();
+        playerAnimator = GetComponent<Animator>();
     }
 
     // FixedUpdate는 물리 갱신 주기에 맞춰 실행됨
