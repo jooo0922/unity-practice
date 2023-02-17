@@ -47,6 +47,12 @@ public class PlayerMovement : MonoBehaviour {
 
     // 입력값에 따라 캐릭터를 좌우로 회전
     private void Rotate() {
-
+        // 상대적으로 회전할 각도 계산
+        // 정방향회전 / 반대방향회전 / 정지 여부 * 회전속력 * 한 프레임 기준 회전 각도로 변환하는 델타타임값
+        float turn = playerInput.rotate * rotateSpeed * Time.deltaTime;
+        // 리지드바디.rotation 에 회전하고자 하는 목표각도를 계산하여 할당
+        // 현재 각도 * 상대적으로 더 회하고자 하는 각도 -> 쿼터니온에서 상대적으로 더 회전하려는 각도를 계산하려면 쿼터니온 곱으로 계산해줘야 함. -> 쿼터니온 사이의 연산이 행렬 곱이기 때문
+        // 이떄, Vector3(0, turn, 0)은 오일러각 이므로, 유니티 내부에서 처리하는 쿼터니온 타입으로 변환하여 곱해줌.
+        playerRigidbody.rotation = playerRigidbody.rotation * Quaternion.Euler(0, turn, 0f);
     }
 }
