@@ -58,6 +58,17 @@ public class Gun : MonoBehaviour {
 
     // 발사 시도
     public void Fire() {
+        // 총 발사 조건 검사
+        // 1. 현재 총 상태가 State.Ready 인지
+        // 2. 현재 시점 >= 마지막 총 발사 시점 + 탄알 발사 간격 보다 지났는지
+        if (state == State.Ready && Time.time >= lastFireTime + gunData.timeBetFire)
+        {
+            // 두 가지 조건을 모두 만족하면 아래 작업을 처리
+            // 총 발사 시점을 현재 시점으로 갱신
+            lastFireTime = Time.time;
+            // 실제 발사 메서드 호출 (Fire() 는 조건을 체크해서 실제 발사 작업을 '위임'하는 역할)
+            Shot();
+        }
 
     }
 
