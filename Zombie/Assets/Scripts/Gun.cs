@@ -68,6 +68,19 @@ public class Gun : MonoBehaviour {
 
     // 발사 이펙트와 소리를 재생하고 탄알 궤적을 그림
     private IEnumerator ShotEffect(Vector3 hitPosition) {
+        // 총구 화염 파티클 시스템 컴포넌트 재생
+        muzzleFlashEffect.Play();
+        // 탄피 배출 파티클 시스템 컴포넌트 재생
+        shellEjectEffect.Play();
+
+        // 총격 소리 오디오 클립 재생
+        // 오디오 소스 컴포넌트의 PlayOneShot() 메서드는 이미 재생중인 오디오 클립을 정지하지 않고, 입력받은 오디오 클립과 같이 재생시켜 소리를 중첩시킴! -> 총알 연사 효과음에 적합!
+        gunAudioPlayer.PlayOneShot(gunData.shotClip);
+
+        // 라인 렌더러로 그릴 선(탄알 궤적)의 시작점과 끝점 정의
+        bulletLineRenderer.SetPosition(0, fireTransform.position); // 시작점: 총구 위치
+        bulletLineRenderer.SetPosition(1, hitPosition); // 끝점: 탄알이 맞은 위치 (코루틴 메서드 ShotEffect() 의 인자로 전달받음)
+
         // 라인 렌더러를 활성화하여 탄알 궤적을 그림
         bulletLineRenderer.enabled = true;
 
