@@ -32,6 +32,14 @@ public class Gun : MonoBehaviour {
 
     private void Awake() {
         // 사용할 컴포넌트의 참조 가져오기
+        gunAudioPlayer = GetComponent<AudioSource>(); // 오디오소스 컴포넌트 가져오기
+        bulletLineRenderer = GetComponent<LineRenderer>(); // 라인 렌더러 컴포넌트 가져오기
+
+        // 라인 렌더러가 사용할 점 2개로 변경 (총구 위치, 총알이 닿는 위치)
+        bulletLineRenderer.positionCount = 2;
+
+        // 라인 렌더러 비활성화 (이미 인스펙터 창에서 비활성화 했지만, 코드에서도 확실하게 비활성화하는 게 좋음)
+        bulletLineRenderer.enabled = false;
     }
 
     private void OnEnable() {
