@@ -147,18 +147,47 @@ public class Gun : MonoBehaviour {
 
     // 재장전 시도
     public bool Reload() {
-        return false;
+        // 1. 현재 재장전 중이거나
+        // 2. 남은 탄알이 없거나
+        // 3. 현재 탄알집에 탄알이 최대치인 경우
+        // 재장전을 실행하지 않고 false 를 반환하며 Reload() 메서드를 종료함
+        if (state == State.Reloading || ammoRemain <= 0 || magAmmo >= gunData.magCapacity)
+        {
+            return false;
+        }
+
+        // 위 조건 중 하나라도 해당되면 재장전을 실행시킴
+        // 실질적인 재장전 작업은 코루틴 메서드 ReloadRoutine() 에서 실행 -> Reload() 는 재장전 작업을 위임하는 역할
+        StartCoroutine(ReloadRoutine());
+        return true;
     }
 
     // 실제 재장전 처리를 진행
     private IEnumerator ReloadRoutine() {
-        // 현재 상태를 재장전 중 상태로 전환
+        // 현재 상태를 재장전 중 상태로 전환 -> 재장전 및 발사 불가 -> 사실상 총을 잠금상태로 만든 것! 
         state = State.Reloading;
+        // 재장전 오디오 클립 재생 -> 이전 오디오 클립 소리와 중첩시켜 재생
+        gunAudioPlayer.PlayOneShot(gunData.reloadClip);
       
         // 재장전 소요 시간 만큼 처리 쉬기
         yield return new WaitForSeconds(gunData.reloadTime);
 
-        // 총의 현재 상태를 발사 준비된 상태로 변경
+        // 탄창에 채워야 할 탄알 수 계산 (탄알집 최대 탄알 수 - 탄알집 현재 탄알 수)
+        int ammoToFill = gunData.magCapacity - magAmmo;
+
+        // 탄창에 채워야 할 탄알 수가 남아있는 전체 탄알 수보다 많다면,
+        // 남아있는 탄알 수 만큼이라도 채우도록 채워야 할 탄알 수 변경
+        if (ammoRemain < ammoToFill)
+        {
+            ammoToFill = ammoRemain;
+        }
+
+        // 현재 탄알집을 채움
+        magAmmo += ammoToFill;
+        // 남아있는 전체 탄알 수에서 채운 탄알 수만큼 빼줌
+        ammoRemain -= ammoToFill;
+
+        // 총의 현재 상태를 발사 준비된 상태로 변경 -> 발사 가능. 탄알집 탄알 수 감소 시, 재장전도 가능. -> 사실상 총의 잠금을 해제한 것!
         state = State.Ready;
     }
 }
