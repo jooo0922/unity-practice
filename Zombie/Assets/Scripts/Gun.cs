@@ -74,7 +74,50 @@ public class Gun : MonoBehaviour {
 
     // 실제 발사 처리
     private void Shot() {
-      
+        // 레이캐스트에 의한 충돌 정보를 저장하는 RaycastHit 타입의 컨테이너 변수 선언 (충돌 위치, 충돌 대상, 충돌 표면의 방향 등의 정보를 담고 있음.)
+        RaycastHit hit;
+        // 탄알이 맞은 곳 (레이캐스트와의 충돌 위치)를 저장할 변수. (Vector3(0, 0, 0) 으로 초기화)
+        Vector3 hitPosition = Vector3.zero;
+
+        // 레이캐스트 충돌 여부 검사 (레이(반직선) 시작점, 레이 방향벡터, 충돌 정보 저장 컨테이너 변수, 레이 길이(탄알의 사정거리))
+        // 참고로 RaycastHit 타입 변수 hit 앞에 out 을 붙인 것, Raycast() 메서드 내에서 해당 변수가 변경되면, 변경사항을 유지한 채 반환해주는 키워드임.
+        if (Physics.Raycast(fireTransform.position, fireTransform.forward, out hit, fireDistance))
+        {
+            // 레이캐스트 충돌 검사 결과, 어떤 게임 오브젝트와 충돌한 경우,
+
+            // 충돌한 상대방 게임 오브젝트의 콜라이더 컴포넌트를 통해, IDamageable 인터페이스를 상속받는 컴포넌트를 찾음
+            IDamageable target = hit.collider.GetComponent<IDamageable>();
+
+            // IDamageable 인터페이스를 상속받은 컴포넌트를 갖고 있다는 것은, 충돌한 상대방 게임 오브젝트가 데미지를 입을 수 있는 게임 오브젝트라는 뜻!
+            if (target != null)
+            {
+                // 상대방 게임 오브젝트의 IDamageable 인터페이스를 상속받는 컴포넌트의 OnDamage() 메서드를 실행해서 상대방에게 데미지를 입힘
+                // RaycastHit.point 는 레이캐스트의 충돌위치, RaycastHit.normal 은 레이캐스트의 충돌 표면 방향벡터 값을 갖는 필드
+                target.OnDamage(gunData.damage, hit.point, hit.normal);
+            }
+
+            // 레이가 충돌한 위치 저장
+            hitPosition = hit.point;
+        }
+        else
+        {
+            // 레이캐스트 충돌 검사 결과, 충돌한 게임 오브젝트가 없는 경우,
+
+            // 충돌위치값을 총구위치로부터 총구 앞쪽방향으로 최대 사정거리까지 더해준 위치값(즉, 총알이 최대 사정거리까지 날아갔을 때의 위치)을 저장함/
+            hitPosition = fireTransform.position + fireTransform.forward * fireDistance;
+        }
+
+        // 발사 이펙트를 재생하는 코루틴 메서드 실행
+        // StartCoroutine() 메서드는 코루틴 메서드를 실행시키는 유니티 내장 메서드
+        StartCoroutine(ShotEffect(hitPosition));
+
+        // 현재 탄알집에 남은 탄알 수 -1
+        magAmmo--;
+        if (magAmmo <= 0)
+        {
+            // 현재 탄알집에 탄알이 없다면, 총의 현재 상태를 Empty 로 변경
+            state = State.Empty;
+        }
     }
 
     // 발사 이펙트와 소리를 재생하고 탄알 궤적을 그림
