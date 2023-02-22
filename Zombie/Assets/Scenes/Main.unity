@@ -250,6 +250,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74d744994bc414c37bfda957f1d57118, type: 3}
+--- !u!198 &252686192 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198000012944515248, guid: 74d744994bc414c37bfda957f1d57118,
+    type: 3}
+  m_PrefabInstance: {fileID: 252686191}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1015240210
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -549,7 +555,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064046904}
-  m_LocalRotation: {x: 0.41852483, y: 0.34116474, z: -0.17335862, w: 0.82364464}
+  m_LocalRotation: {x: 0.41852477, y: 0.34116474, z: -0.17335863, w: 0.82364464}
   m_LocalPosition: {x: -8, y: 16, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -635,7 +641,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430577953}
-  m_LocalRotation: {x: 0.41852483, y: 0.34116474, z: -0.17335862, w: 0.82364464}
+  m_LocalRotation: {x: 0.41852477, y: 0.34116474, z: -0.17335863, w: 0.82364464}
   m_LocalPosition: {x: -8, y: 16, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1040,12 +1046,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93c14943f73d87543b453f3a037d7029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireTransform: {fileID: 0}
-  muzzleFlashEffect: {fileID: 0}
-  shellEjectEffect: {fileID: 0}
-  gunData: {fileID: 0}
+  fireTransform: {fileID: 1617519007}
+  muzzleFlashEffect: {fileID: 252686192}
+  shellEjectEffect: {fileID: 1919440729}
+  gunData: {fileID: 11400000, guid: 908dc60307b504ab2a11d258c1e9acee, type: 2}
   ammoRemain: 100
   magAmmo: 0
+--- !u!4 &1617519007 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4959168996130380, guid: 13259943c4d634186ac994d570bb3253,
+    type: 3}
+  m_PrefabInstance: {fileID: 1617519002}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1660423840
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,3 +1157,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e60b325a019543cbb2e3920522a2e6b, type: 3}
+--- !u!198 &1919440729 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198000010131513902, guid: 8e60b325a019543cbb2e3920522a2e6b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1919440728}
+  m_PrefabAsset: {fileID: 0}
