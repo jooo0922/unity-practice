@@ -29,6 +29,25 @@ public class PlayerShooter : MonoBehaviour {
 
     private void Update() {
         // 입력을 감지하고 총 발사하거나 재장전
+        if (playerInput.fire)
+        {
+            // 발사 입력 감지 시, Gun 스크립트의 총 발사 시도 메서드 실행
+            gun.Fire();
+        }
+        else if (playerInput.reload)
+        {
+            // 재장전 입력 감지 시, Gun 스크립트의 재장전 시도 메서드 실행
+            // 재장전 시도 메서드 실행결과(true / false 반환. Gun 스크립트 참고) 검사
+            if (gun.Reload())
+            {
+                // 재장전 성공 시, 애니메이터 컨트롤러의 Reload 트리거 파라미터 발동 > Upper Body 레이어 상태도의 Reload 애니메이션 실행
+                // Reload -> Aim Idle(기본 상태) 로의 전이조건은 없기 때문에, Reload 애니메이션이 끝나면 알아서 기본 상태로 돌아옴.
+                playerAnimator.SetTrigger("Reload");
+            }
+        }
+
+        // 남은 탄알 UI 갱신
+        UpdateUI();
     }
 
     // 탄약 UI 갱신
