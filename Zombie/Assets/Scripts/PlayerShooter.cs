@@ -59,8 +59,28 @@ public class PlayerShooter : MonoBehaviour {
         }
     }
 
-    // 애니메이터의 IK 갱신
+    // 애니메이터의 IK 갱신 -> Upper Body 레이어에서 IK 애니메이션이 실행되어 IK 정보가 갱신될 때마다 호출되는 이벤트 메서드 
     private void OnAnimatorIK(int layerIndex) {
-        
+        // 총의 기준점인 gunPivot 게임 오브젝트의 위치를 플레이어 게임 오브젝트의 오른쪽 팔꿈지 위치로 맞춰줌으로써, 상체가 움직일 때마다 총도 같이 움직이도록 함.
+        // 애니메이터 컴포넌트.GetIKHintPosition(AvatarIKHint 타입의 부위 Enum) 을 실행하, 해당 IK 대상의 현재 위치를 가져올 수 있음.
+        gunPivot.position = playerAnimator.GetIKHintPosition(AvatarIKHint.RightElbow);
+
+        // 왼손 IK 대상의 위치와 회전을 목표위치와 목표회전에 맞추기 위한 가중치 설정
+        // '가중치' 란, 왼손 IK 대상의 현재위치와 현재회전에서 목표위치와 목표회전 사이에서 어느 정도 지점에 위치할 것이냐를 의미하는 값.
+        // 0이면 현재위치, 0.5 면 현재위치와 목표회전 가운데, 1이면 목표위치
+        playerAnimator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1.0f);
+        playerAnimator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1.0f);
+
+        // 왼손 IK 대상의 목표위치와 목표회전을 Gun 게임 오브젝트의 자식인 Left Handle (왼쪽 손잡이) 게임 오브젝트에 맞춤
+        playerAnimator.SetIKPosition(AvatarIKGoal.LeftHand, leftHandMount.position);
+        playerAnimator.SetIKRotation(AvatarIKGoal.LeftHand, leftHandMount.rotation);
+
+        // 오른손 IK 대상의 위치와 회전을 목표위치와 목표회전에 맞추기 위한 가중치 설정른
+        playerAnimator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1.0f);
+        playerAnimator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1.0f);
+
+        // 오른손 IK 대상의 목표위치와 목표회전을 Gun 게임 오브젝트의 자식인 Right Handle (오른쪽 손잡이) 게임 오브젝트에 맞춤
+        playerAnimator.SetIKPosition(AvatarIKGoal.RightHand, rightHandMount.position);
+        playerAnimator.SetIKRotation(AvatarIKGoal.RightHand, rightHandMount.rotation);
     }
 }
