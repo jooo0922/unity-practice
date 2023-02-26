@@ -49,6 +49,8 @@ public class PlayerHealth : LivingEntity {
     public override void RestoreHealth(float newHealth) {
         // LivingEntity의 RestoreHealth() 실행 (체력 증가)
         base.RestoreHealth(newHealth);
+        // 체력 슬라이더 컴포넌트의 값 필드를 회복된 현재 체력으로 업데이트
+        healthSlider.value = health;
     }
 
     // 데미지 처리
