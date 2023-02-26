@@ -26,9 +26,23 @@ public class PlayerHealth : LivingEntity {
         playerShooter = GetComponent<PlayerShooter>();
     }
 
+    // LivingEntity 의 OnEnable() 메서드 확장
     protected override void OnEnable() {
         // LivingEntity의 OnEnable() 실행 (상태 초기화)
         base.OnEnable();
+
+        // 플레이어 사망 시, Die() 메서드에서 비활성화 해주는 게임 오브젝트와 컴포넌트들을 다시 활성화하는 것.
+        // 이는 플레이어 캐릭터의 '부활 기능'을 염두에 둔 기능이라고 보면 됨. -> 사망 후 바로 게임오버 처리할거면 굳이 런타임에 얘내들을 다시 활성화해주는 작업은 안해줘도 됨.
+        // 체력 슬라이더 활성화
+        healthSlider.gameObject.SetActive(true);
+        // 체력 슬라이더 컴포넌트의 최댓값 필드를 기본 체력값으로 초기화
+        healthSlider.maxValue = startingHealth;
+        // 체력 슬라이더 컴포넌트의 값 필드를 현재 체력값으로 초기화
+        healthSlider.value = health;
+
+        // 플레이어 조작 관련 스크립트 컴포넌트 활성화
+        playerMovement.enabled = true;
+        playerShooter.enabled = true;
     }
 
     // 체력 회복
