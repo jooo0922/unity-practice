@@ -87,5 +87,21 @@ public class PlayerHealth : LivingEntity {
 
     private void OnTriggerEnter(Collider other) {
         // 아이템과 충돌한 경우 해당 아이템을 사용하는 처리
+        // 플레이어 캐릭터가 사망하지 않은 경우에만 아이템을 사용할 수 있도록 함
+        if (!dead)
+        {
+            // 충돌한 상대방 콜라이더 컴포넌트 > 상대방 게임 오브젝트 > IItem 인터페이스를 상속받는 컴포넌트를 갖고 있는지 검색
+            IItem item = other.GetComponent<IItem>();
+
+            // 충돌한 상대방 게임 오브젝트가 IItem 을 상속받는 아이템 게임 오브젝트라면 해당 블록을 실행함
+            if (item != null)
+            {
+                // Use() 메서드를 실행하여 해당 아이템 사용
+                // 아이템 사용 대상은 플레이어 캐릭터 게임 오브젝트 자신을 인자로 전달해 줌.
+                item.Use(gameObject);
+                // 아이템 줍는 오디오 클립 재생
+                playerAudioPlayer.PlayOneShot(itemPickupClip);
+            }
+        }
     }
 }
