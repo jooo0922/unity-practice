@@ -71,6 +71,18 @@ public class PlayerHealth : LivingEntity {
     public override void Die() {
         // LivingEntity의 Die() 실행(사망 적용)
         base.Die();
+
+        // 체력 슬라이더 게임 오브젝트 비활성화 -> 사망했으니 체력이 바닥났을테고, 그럼 안보여줘도 되겠지.
+        healthSlider.gameObject.SetActive(false);
+
+        // 사망 오디오 클립 재생
+        playerAudioPlayer.PlayOneShot(deathClip);
+        // 애니메이터 컴포넌트의 Die 트리거 파라미터 발동(일시로 Die 파라미터가 true 가 됬다가 다시 false 로 복구) > Die 상태로 일시 전이 > 사망 애니메이션 재생
+        playerAnimator.SetTrigger("Die");
+
+        // 플레이어 조작 관련 스크립트 컴포넌트 비활성화
+        playerMovement.enabled = false;
+        playerShooter.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other) {
