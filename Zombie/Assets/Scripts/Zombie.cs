@@ -37,8 +37,16 @@ public class Zombie : LivingEntity
         }
     }
 
+    // Awake() 는 Start() 와 유사하게 초기 1회 자동 실행되는 유니티 이벤트 메서드
+    // 다만, Start() 보다 실행시점이 한 프레임 더 빠름
     private void Awake() {
-        // 초기화
+        // 좀비 게임 오브젝트로부터 필요한 컴포넌트들을 가져옴
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        zombieAnimator = GetComponent<Animator>();
+        zombieAudioPlayer = GetComponent<AudioSource>();
+
+        // 좀비 게임 오브젝트의 자식 게임 오브젝트에 할당된 컴포넌트인 Skinned Mesh Renderer 컴포넌트를 가져옴
+        zombieRenderer = GetComponentInChildren<Renderer>();
     }
 
     // 좀비 AI의 초기 스펙을 결정하는 셋업 메서드
