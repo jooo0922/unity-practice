@@ -50,8 +50,22 @@ public class Zombie : LivingEntity
     }
 
     // 좀비 AI의 초기 스펙을 결정하는 셋업 메서드
+    // Zombie 스크립트 컴포넌트 내부에서 사용하는 메서드가 아니라,
+    // '좀비 생성기' 에서 생성된 좀비의 능력치를 설정할 때 실행하기 위해 public 으로 뚫어놓은 메서드
+    // 인자로 전달받는 zombieData 는 스크립터블 오브젝트 에셋 형태로 전달받는 데이터 컨테이너
     public void Setup(ZombieData zombieData) {
-        
+        // 체력 설정
+        startingHealth = zombieData.health;
+        health = zombieData.health;
+
+        // 공격력 설정
+        damage = zombieData.damage;
+
+        // 내비메시 에이전트(생성된 좀비)의 이동 속도 설정
+        navMeshAgent.speed = zombieData.speed;
+
+        // 렌더러 컴포넌트가 사용중인 머티리얼의 컬러 변경 -> 생성된 좀비의 외형 색이 변함
+        zombieRenderer.material.color = zombieData.skinColor;
     }
 
     private void Start() {
