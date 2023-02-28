@@ -83,6 +83,42 @@ public class Zombie : LivingEntity
         // 살아 있는 동안 무한 루프
         while (!dead)
         {
+            // 추척 대상 존재 여부에 따라 처리가 달라짐
+            if (hasTarget)
+            {
+                // 추적 대상이 존재하면? 1. 네비메시 에이전트의 이동 재시작 2. 네비메시 에이전트의 목표 위치 재설정을 통한 이동경로 재설정
+                navMeshAgent.isStopped = false;
+                navMeshAgent.SetDestination(targetEntity.transform.position);
+            }
+            else
+            {
+                // 추적 대상이 존재하지 않는다면? 1. 네비메시 에이전트 이동 중지 2. 좀비 게임 오브젝트의 일정 반경 내에 새로운 추적대상을 찾아 갱신
+                // 네비메시 에이전트 이동 중단 처리
+                navMeshAgent.isStopped = true;
+
+                // 좀비 게임 오브젝트의 전역공간 위치를 중심으로 20유닛 반지름을 갖는 가상의 구를 그렸을 때, 구와 겹치는 모든 콜라이더를 가져옴
+                // 단, 모든 콜라이더와 교차여부를 검사하면 성능 낭비니까, WhatIsTarget 레이어 마스크에 해당하는 레이어를 갖는 콜라이더만 교차여부를 검사해서 가져옴
+                // WahtIsTarget 에는 나중에 인스펙터 창을 통해 Player 레이어를 할당할 것이므로, 사실상 구와 겹치는 플레이어 게임 오브젝트의 콜라이더들만 가져온다고 보면 됨.
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
+
+                // 겹치는 콜라이더들을 순회하면서, 살아 있는 LivingEntity 컴포넌트를 찾음
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    // 현재 콜라이더를 갖고 있는 게임 오브젝트로부터 LivingEntity 컴포넌트를 찾아서 가져오기
+                    LivingEntity livingEntity = colliders[i].GetComponent<LivingEntity>();
+
+                    // 가져온 LivingEntity 컴포넌트가 존재하고, 그 LivingEntity 의 사망상태가 살아있다면 추적대상을 해당 LivingEntity 로 갱신
+                    if (livingEntity != null && !livingEntity.dead)
+                    {
+                        // 추적대상 갱신
+                        targetEntity = livingEntity;
+
+                        // 추적대상 갱신을 완료했다면, for 문 루프를 중단하고 나머지 콜라이더들은 무시함
+                        break;
+                    }
+                }
+            }
+
             // 0.25초 주기로 처리 반복
             yield return new WaitForSeconds(0.25f);
         }
