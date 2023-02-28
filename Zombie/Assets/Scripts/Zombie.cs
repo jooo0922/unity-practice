@@ -146,6 +146,27 @@ public class Zombie : LivingEntity
     public override void Die() {
         // LivingEntity의 Die()를 실행하여 기본 사망 처리 실행
         base.Die();
+
+        // 다른 좀비 게임 오브젝트의 내비메시 에이전트의 이동을 방해하지 않도록, 사망한 좀비의 콜라이더 컴포넌트를 가져와 모두 비활성화함.
+        Collider[] zombieColliders = GetComponents<Collider>();
+        for (int i = 0; i < zombieColliders.Length; i++)
+        {
+            // 남아있는 콜라이더 컴포넌트가 살아있는 좀비와 충돌하여 이동을 방해하지 않도록 비활성화
+            zombieColliders[i].enabled = false;
+        }
+
+        // 죽은 좀비의 내비메시 에이전트 이동 중단
+        navMeshAgent.isStopped = true;
+        // 내비메시 에이전트 컴포넌트 비활성화 -> 내비메시 에이전트 컴포넌트가 살아있으면,
+        // 다른 좀비 게임 오브젝트의 내비메시 에이전트가 이미 죽은 좀비의 내비메시 에이전트의 위치를 고려해서 경로를 계산하기 때문에
+        // 죽은 좀비를 굳이 피해가는 경로로 이동하게 됨. -> 굳이 이렇게 죽은 좀비를 피해다니지 않도록 내비메시 에이전트 컴포넌트 자체를 비활성화함.
+        navMeshAgent.enabled = false;
+
+        // 사망 애니메이션 재생
+        // Die 트리거 파라미터 실행으로 Any State -> Die 로 상태 전이 
+        zombieAnimator.SetTrigger("Die");
+        // 사망 효과음 재생
+        zombieAudioPlayer.PlayOneShot(deathSound);
     }
 
     private void OnTriggerStay(Collider other) {
