@@ -169,7 +169,32 @@ public class Zombie : LivingEntity
         zombieAudioPlayer.PlayOneShot(deathSound);
     }
 
+    // 물리 갱신 주기(0.02초)에 맞춰 지속적으로 실행되는 유니티 트리거 충돌 이벤트 메서드
     private void OnTriggerStay(Collider other) {
         // 트리거 충돌한 상대방 게임 오브젝트가 추적 대상이라면 공격 실행
+        // 1. 현재 좀비가 사망상태가 아니고,
+        // 2. 최근 공격 시점에서 공격 간격 시간이 지났다면 -> 공격 가능
+        if (!dead && Time.time >= lastAttackTime + timeBetAttack)
+        {
+            // 충돌한 상대방 콜라이더를 갖는 게임 오브젝트에서 LivingEntity 컴포넌트가 있는지 찾아서 가져오기
+            LivingEntity attackTarget = other.GetComponent<LivingEntity>();
+
+            // 1. 충돌한 상대방의 LivingEntity 컴포넌트가 존재하고,
+            // 2. 현재 좀비의 추적대상(targetEntity) 와 동일하다면 -> 공격 실행
+            if (attackTarget != null && attackTarget == targetEntity)
+            {
+                // 최근 공격 시점을 현재 시점으로 갱신
+                lastAttackTime = Time.time;
+
+                // 공격 대상의 OnDamage() 메서드에 전달해 줄 공격 정보 인자들 계산
+                // 피격위치를 상대방 게임 오브젝트 콜라이더 물리표면의 점들 중에서, 현재 좀비의 위치와 가장 가까운 점으로 계산 -> 근사치로 계산한 것
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+                // 피격방향(공격받은 표면의 방향 벡터)은 공격 대상 위치에서 좀비 위치로 향하는 방향벡터를 계산
+                Vector3 hitNormal = transform.position - other.transform.position;
+
+                // 공격 실행 -> 공격대상의 LivingEntity 컴포넌트에 현재 좀비의 공격 대미지 적용
+                attackTarget.OnDamage(damage, hitPoint, hitNormal);
+            }
+        }
     }
 }
