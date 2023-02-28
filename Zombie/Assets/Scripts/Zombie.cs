@@ -126,6 +126,18 @@ public class Zombie : LivingEntity
 
     // 데미지를 입었을 때 실행할 처리
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal) {
+        // 사망하지 않은 상태에서만 피격 효과 재생
+        if (!dead)
+        {
+            // 공격받은 지점과 방향으로 파티클 효과 재생
+            hitEffect.transform.position = hitPoint; // 공격받은 지점을 파티클 게임 오브젝트의 위치로 지정
+            hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal); // 파티클 게임 오브젝트가 공격받은 방향을 바라보도록 회전값 변경
+            hitEffect.Play(); // 파티클 시스템 컴포넌트 재생
+
+            // 파티클 효과음 재생
+            zombieAudioPlayer.PlayOneShot(hitSound);
+        }
+
         // LivingEntity의 OnDamage()를 실행하여 데미지 적용
         base.OnDamage(damage, hitPoint, hitNormal);
     }
