@@ -403,7 +403,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.2994924, y: 1}
+    m_SensorSize: {x: 1.9568034, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -604,6 +604,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5314e1f0757cf4cf79d58731d117e6cd, type: 3}
+--- !u!4 &1437254429 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4984717578414758, guid: 5314e1f0757cf4cf79d58731d117e6cd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1437254428}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1437254430 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4821426734562698, guid: 5314e1f0757cf4cf79d58731d117e6cd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1437254428}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1437254431 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4008875457194926, guid: 5314e1f0757cf4cf79d58731d117e6cd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1437254428}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1437254432 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4786794668291628, guid: 5314e1f0757cf4cf79d58731d117e6cd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1437254428}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1451607305
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,9 +657,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf60ce9abab742a98a648d974181076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zombiePrefab: {fileID: 0}
-  zombieDatas: []
-  spawnPoints: []
+  zombiePrefab: {fileID: 1654943891108052096, guid: de60faf914ffe4f758ea39b3264f7f27,
+    type: 3}
+  zombieDatas:
+  - {fileID: 11400000, guid: 25ab68174eff04a00a3b0e615512c21d, type: 2}
+  - {fileID: 11400000, guid: cc522b1ceb6514cf8bf055109ac91c42, type: 2}
+  - {fileID: 11400000, guid: 62f0cde7688af4d649167bbcce2f3731, type: 2}
+  spawnPoints:
+  - {fileID: 1437254432}
+  - {fileID: 1437254431}
+  - {fileID: 1437254430}
+  - {fileID: 1437254429}
 --- !u!4 &1451607307
 Transform:
   m_ObjectHideFlags: 0
@@ -644,7 +676,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1451607305}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7368964, y: 0.89350593, z: -0.030417785}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
