@@ -36,7 +36,19 @@ public class ZombieSpawner : MonoBehaviour {
 
     // 현재 웨이브에 맞춰 좀비들을 생성
     private void SpawnWave() {
+        // 현재 웨이브를 1 증가시킴
+        wave++;
 
+        // 현재 웨이브에 * 1.5 후, 반올림한 정수값만큼 좀비 생성
+        // Mathf.RoundToInt(float) 은 float 타입을 입력받아 반올림 후, 정수로 반환하는 메서드 
+        int spawnCount = Mathf.RoundToInt(wave * 1.5f);
+
+        // spawnCount 수만큼 좀비 생성 -> 현재 웨이브 수에 비례하여 생성되는 좀비 수 증가
+        for (int i = 0; i < spawnCount; i++)
+        {
+            // 실제 좀비 생성 메서드 실행
+            CreateZombie();
+        }
     }
 
     // 좀비를 생성하고 생성한 좀비에게 추적할 대상을 할당
