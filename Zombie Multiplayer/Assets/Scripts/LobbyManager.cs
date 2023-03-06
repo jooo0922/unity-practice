@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // 마스터(매치 메이킹) 서버와 룸 접속을 담당
+// MonoBehaviourPunCallbacks 클래스는 MonoBehaviour 클래스를 상속받고 있으며,
+// 기존 유니티 이벤트 메서드에 더해서 포톤 서비스에 의해 발생할 수 있는 이벤트(마스터서버 접속 성공, 마스터서버 접속 실패, 룸 접속 성공, 룸 접속 실패 등...)를 감지하고, 해당 콜백 이벤트 메서드를 자동실행 해줌!
 public class LobbyManager : MonoBehaviourPunCallbacks {
     private string gameVersion = "1"; // 게임 버전 -> 동일한 버전의 게임으로 접속한 플레이어들끼리만 매칭시키기 위해 사용하는 변수
 
@@ -24,8 +26,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
     }
 
     // 마스터 서버 접속 성공시 자동 실행
+    // 부모 클래스인 MonoBehaviourPunCallbacks 이 마스터 서버 접속 성공 이벤트 OnConnectedToMaster 를 감지해서
+    // 호출시킬 이벤트 콜백 메서드를 정의하려는 것!
     public override void OnConnectedToMaster() {
-        
+        // 마스터 서버 접속이 성공했다, 룸 접속이 가능하도록 버튼 활성화
+        joinButton.interactable = true;
+        // 마스터 서버 접속 성공 했음을 텍스트로 표시
+        connectionInfoText.text = "온라인 : 마스터 서버와 연결됨";
     }
 
     // 마스터 서버 접속 실패시 자동 실행
