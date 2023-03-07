@@ -48,7 +48,22 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
 
     // 룸 접속 시도
     public void Connect() {
+        // 룸 접속 시도 중에 Join 버튼 중복 클릭 방지를 위해 Interactable 해제
+        joinButton.interactable = false;
 
+        // 마스터 서버에 접속해 있는지 여부를 먼저 체크
+        if (PhotonNetwork.IsConnected)
+        {
+            // 마스터 서버에 접속된 상태라면 비어있는 무작위 룸 접속 시도
+            connectionInfoText.text = "룸에 접속...";
+            PhotonNetwork.JoinRandomRoom(); 
+        }
+        else
+        {
+            // 마스터 서버에 접속이 안된 상태라면 마스터 서버 재접속 시도
+            connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않\n접속 재시도 중...";
+            PhotonNetwork.ConnectUsingSettings();
+        }
     }
 
     // (빈 방이 없어)랜덤 룸 참가에 실패한 경우 자동 실행
