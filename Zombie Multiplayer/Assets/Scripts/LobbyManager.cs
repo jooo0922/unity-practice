@@ -78,7 +78,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
     }
 
     // 룸에 참가 완료된 경우 자동 실행
+    // OnJoinRandomFailed() > PhotonNetwork.CreateRoom() 로 방을 직접 생성한 경우에도 이 포톤 이벤트 메서드가 실행됨!
     public override void OnJoinedRoom() {
-        
+        // 룸 접속 성공 상태 표시
+        connectionInfoText.text = "방 참가 성공";
+        // 별도의 대기시간 없이 현재 룸이 접속한 플레이어들에게 동일한 Main 씬이 로드되도록 함. -> 특히, 방장 플레이어 컴퓨터에서 실행 시, 룸의 나머지 플레이어 컴퓨터에서도 자동으로 실행시킴!
+        // 플레이어 컴퓨터마다 별도로 실행시키는 것도 가능! 
+        // PhotonNetwork.LoadLevel() vs SceneManager.LoadScene() 차이점 교재 p.852 참고
+        PhotonNetwork.LoadLevel("Main");
     }
 }
