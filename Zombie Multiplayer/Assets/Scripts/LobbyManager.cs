@@ -66,9 +66,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
         }
     }
 
-    // (빈 방이 없어)랜덤 룸 참가에 실패한 경우 자동 실행
+    // (빈 방이 없어)랜덤 룸 참가에 실패한 경우 자동 실행 -> PhotonNetwork.JoinRandomRoom() 실행 실패 시 호출되는 포톤 이벤트 메서드
+    // 마스터 서버와 연결이 끊긴 것이 아닌, 빈 방이 없는 경우 해당 메서드 실행이 실패함 -> 방을 새로 만들어주면 되겠지!
     public override void OnJoinRandomFailed(short returnCode, string message) {
-        
+        // 룸 접속 실패 상태 표시
+        connectionInfoText.text = "빈 방이 없음, 새로운 방 생성...";
+        // 최대 4명 수용 가능한 빈 방 생성
+        // PhotonNetwork.CreateRoom(방 이름, 방 생성 옵션) 을 인자로 받고,
+        // 방 생성 시, OnJoinedRoom() 포톤 이벤트 메서드도 자동 실행됨
+        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 4 });
     }
 
     // 룸에 참가 완료된 경우 자동 실행
