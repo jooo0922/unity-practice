@@ -37,12 +37,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
 
     // 마스터 서버 접속 실패시 자동 실행
     public override void OnDisconnected(DisconnectCause cause) {
-        
+        // 룸 접속 버튼 > 버튼 컴포넌트 > Interactable 속성 비활성화 유지
+        joinButton.interactable = false;
+        // 마스터 서버 접속 실패 했음을 텍스트로 표시
+        connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음\n접속 재시도 중...";
+
+        // Start() 에서 호출한 것과 동일한 마스터 서버 접속 메서드 호출
+        PhotonNetwork.ConnectUsingSettings();
     }
 
     // 룸 접속 시도
     public void Connect() {
-        
+
     }
 
     // (빈 방이 없어)랜덤 룸 참가에 실패한 경우 자동 실행
