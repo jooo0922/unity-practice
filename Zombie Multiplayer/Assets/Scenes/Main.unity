@@ -529,6 +529,16 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2680637131972475302, guid: 1aca5c3ed49b3426e8818a6b9f424f62,
+        type: 3}
+      propertyPath: m_SynchronizeLayers.Array.data[0].SynchronizeType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2680637131972475302, guid: 1aca5c3ed49b3426e8818a6b9f424f62,
+        type: 3}
+      propertyPath: m_SynchronizeLayers.Array.data[1].SynchronizeType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2680752447837832572, guid: 1aca5c3ed49b3426e8818a6b9f424f62,
         type: 3}
       propertyPath: sceneViewId
