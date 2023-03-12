@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 940
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Project
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 492}
   m_MaxSize: {x: 10000, y: 10000}
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 40
+  controlID: 19
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 41
+  controlID: 20
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -388,14 +388,14 @@ MonoBehaviour:
     - {fileID: 1107674320158678900, guid: dc7f0d1308d0bd1499a8fee0eea23f08, type: 2}
     - {fileID: 1107841657443903064, guid: 8eebe7519312a5c4eaeed6cd5ebb0411, type: 2}
     m_ValueSerializationHelper:
-    - e00: 0.78705543
+    - e00: 1
       e01: 0
       e02: 0
-      e03: -34.646957
+      e03: -146.5
       e10: 0
-      e11: 0.78705543
+      e11: 1
       e12: 0
-      e13: 253.07191
+      e13: 209
       e20: 0
       e21: 0
       e22: 1
@@ -420,14 +420,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    - e00: 1.1446505
+    - e00: 0.62733644
       e01: 0
       e02: 0
-      e03: -196.76549
+      e03: -75.33646
       e10: 0
-      e11: 1.1446505
+      e11: 0.62733644
       e12: 0
-      e13: 158.85213
+      e13: 159.73248
       e20: 0
       e21: 0
       e22: 1
@@ -515,7 +515,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 60540000
+      m_SelectedIDs: c20b0000
       m_LastClickedID: 0
       m_ExpandedIDs: e0faffff
       m_RenameOverlay:
@@ -625,21 +625,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs
+    - Assets/Scripts
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Prefabs
+  - Assets/Scripts
   m_LastFoldersGridSize: 16
   m_LastProjectPath: /Users/chajooyeong/project/practice/unity/Zombie Multiplayer
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 28}
-    m_SelectedIDs: 0a5c0000
-    m_LastClickedID: 23562
+    m_SelectedIDs: 105c0000
+    m_LastClickedID: 23568
     m_ExpandedIDs: 00000000c65b0000c85b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -720,7 +720,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 83}
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 167
