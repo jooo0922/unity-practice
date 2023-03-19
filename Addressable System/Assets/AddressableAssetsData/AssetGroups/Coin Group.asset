@@ -20,7 +20,9 @@ MonoBehaviour:
   - m_GUID: 4137e6fec43c3437888834126468c4c4
     m_Address: coin_01
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - default
+    - coin
   - m_GUID: fc9dcdb733a0049bbbfaa1629a6466a7
     m_Address: music_01
     m_ReadOnly: 0
