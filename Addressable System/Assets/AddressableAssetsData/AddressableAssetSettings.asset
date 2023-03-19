@@ -66,22 +66,10 @@ MonoBehaviour:
         m_Value: http://[PrivateIpAddress]:[HostingServicePort]
       - m_Id: 5468253db0851489dadc9e16d5f2174a
         m_Value: /Users/chajooyeong/project/practice/unity/Addressable System/Assets
-    - m_InheritedParent: 
-      m_Id: f85928284389d4976a0b9aeeae1d5584
-      m_ProfileName: TestProfile
-      m_Values:
-      - m_Id: e7933ed6c1e5541c9931c26093e5c5be
-        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
-      - m_Id: 700c64506f4ec4f38b129b4440d911d9
-        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
-      - m_Id: 2920bc20936dd4ae6a8e700c81532a49
-        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
-      - m_Id: a015a8e6a8508427e859f6f378ef103f
-        m_Value: ServerData/[BuildTarget]
-      - m_Id: 1f9de8eb8025943998acac3213ec13e7
-        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
-      - m_Id: 5468253db0851489dadc9e16d5f2174a
-        m_Value: /Users/chajooyeong/project/practice/unity/Addressable System/Assets
+      - m_Id: 668e09e45fc014bb58c4f63309ab92b7
+        m_Value: SomeBuildPath
+      - m_Id: 87752e1322c0746a1bb7cfde3a58dbeb
+        m_Value: SomeLoadPath
     m_ProfileEntryNames:
     - m_Id: e7933ed6c1e5541c9931c26093e5c5be
       m_Name: BuildTarget
@@ -100,6 +88,12 @@ MonoBehaviour:
       m_InlineUsage: 0
     - m_Id: 5468253db0851489dadc9e16d5f2174a
       m_Name: New Entry
+      m_InlineUsage: 0
+    - m_Id: 668e09e45fc014bb58c4f63309ab92b7
+      m_Name: TestPath.BuildPath
+      m_InlineUsage: 0
+    - m_Id: 87752e1322c0746a1bb7cfde3a58dbeb
+      m_Name: TestPath.LoadPath
       m_InlineUsage: 0
     m_ProfileVersion: 1
   m_LabelTable:
