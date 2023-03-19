@@ -64,6 +64,8 @@ MonoBehaviour:
         m_Value: ServerData/[BuildTarget]
       - m_Id: 1f9de8eb8025943998acac3213ec13e7
         m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+      - m_Id: 5468253db0851489dadc9e16d5f2174a
+        m_Value: /Users/chajooyeong/project/practice/unity/Addressable System/Assets
     - m_InheritedParent: 
       m_Id: f85928284389d4976a0b9aeeae1d5584
       m_ProfileName: TestProfile
@@ -78,6 +80,8 @@ MonoBehaviour:
         m_Value: ServerData/[BuildTarget]
       - m_Id: 1f9de8eb8025943998acac3213ec13e7
         m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+      - m_Id: 5468253db0851489dadc9e16d5f2174a
+        m_Value: /Users/chajooyeong/project/practice/unity/Addressable System/Assets
     m_ProfileEntryNames:
     - m_Id: e7933ed6c1e5541c9931c26093e5c5be
       m_Name: BuildTarget
@@ -93,6 +97,9 @@ MonoBehaviour:
       m_InlineUsage: 0
     - m_Id: 1f9de8eb8025943998acac3213ec13e7
       m_Name: Remote.LoadPath
+      m_InlineUsage: 0
+    - m_Id: 5468253db0851489dadc9e16d5f2174a
+      m_Name: New Entry
       m_InlineUsage: 0
     m_ProfileVersion: 1
   m_LabelTable:
