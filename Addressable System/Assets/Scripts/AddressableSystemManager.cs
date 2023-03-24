@@ -17,6 +17,8 @@ public class AddressableSystemManager : MonoBehaviour
     {
         StartCoroutine(PlayMainMusicRoutine());
         StartCoroutine(LoadAllWeaponsRoutine(true));
+        StartCoroutine(LoadAllIconSprites());
+        StartCoroutine(loadMusicRoutine());
 
         // 비동기로 프리팹 에셋을 가져와서 게임 오브젝트 복사본으로 인스턴스화시키는 오퍼레이션 핸들을 반환하는 어드레서블 API 
         var operationHandle = Addressables.InstantiateAsync("monster_red");
@@ -106,6 +108,30 @@ public class AddressableSystemManager : MonoBehaviour
                 yield return loadOperationHandle; // 실제 비동기로 스프라이트를 로드함
                 allIconSprites.Add(loadOperationHandle.Result); // 로드한 스프라이트 에셋을 리스트 멤버변수에 추가함.
             }
+        }
+    }
+
+    // 코루틴 메서드로 어드레스(키)에 대응하는 IResourceLocation 리스트를 비동기로 로드하기
+    // 키에 대응하는 IResourceLocation 가 존재하지 않는 경우, 해당 어드레스를 갖고 있는 어드레서블 에셋이 존재하지 않음을 검사할 수 있음.
+    private IEnumerator loadMusicRoutine()
+    {
+        string key = "main_music";
+        AsyncOperationHandle<IList<IResourceLocation>> operationHandle =
+                Addressables.LoadResourceLocationsAsync(key);
+
+        yield return operationHandle;
+
+        IList<IResourceLocation> locations = operationHandle.Result;
+
+        // IResourceLocation 리스트를 사용하는 예시
+        // IResourceLocation 리스트 개수가 0이라면, 상단의 어드레스 키에 대응되는 어드레서블 에셋이 존재하지 않는다는 것을 검사할 수 있음.
+        if (locations.Count <= 0)
+        {
+            Debug.Log("키에 대응하는 어드레서블 에셋이 없음");
+        }
+        else
+        {
+            // main_music 어드레서블 에셋을 실제 로드하는 다른 처리
         }
     }
 }
