@@ -134,4 +134,49 @@ public class AddressableSystemManager : MonoBehaviour
             // main_music 어드레서블 에셋을 실제 로드하는 다른 처리
         }
     }
+
+    // 코루틴 메서드에서 어드레스에 해당하는 어드레서블 에셋과 그것의 의존성 에셋을 전부 원격서버에서 다운로드하기
+    public IEnumerator PreloadDownloadEssentialAssetsRoutine()
+    {
+        // 필수 어드레서블 에셋에 태그된 "essential" 레이블로 검색할 예정
+        string essentialAssetLabel = "essential";
+
+        // 해당 키에 대응하는 에셋과 의존성 에셋의 다운로드 크기 가져옴
+        AsyncOperationHandle<long> getDownloadSizeOperation =
+            Addressables.GetDownloadSizeAsync(essentialAssetLabel);
+
+        yield return getDownloadSizeOperation; // 다운로드 크기를 비동기로 로드해오는 오퍼레이션 수행을 대기함
+
+        // 실제 비동기로 가져온 다운로드 크기를 64비트 정수타입(long) 변수에 저장
+        long downloadSize = getDownloadSizeOperation.Result;
+
+        // 더 이상 가져오려는 에셋의 다운로드 크기를 비동기로 로드해올 필요가 없으니, 메모리 절약을 위해 오퍼레이션 핸들을 해제함.
+        Addressables.Release(getDownloadSizeOperation);
+
+        // 다운로드 크기가 0보다 크다면, 즉, 다운로드해야 할 에셋이 존재한다면, 실제 비동기 다운로드 수행
+        if (downloadSize > 0)
+        {
+            Debug.Log($"필수 에셋들을 다운로드합니다. 다운로드 크기 : {downloadSize}");
+
+            // 해당 에셋과 의존성 에셋을 모두 다운로드하는 오퍼레이션 핸들 반환
+            AsyncOperationHandle downloadDependenciesHandle =
+                Addressables.DownloadDependenciesAsync(essentialAssetLabel);
+
+            // 의존성 다운로드 오퍼레이션이 진행되는 동안 매 프레임마다 다운로드 정보 데이터인 DownloadStatus 를 가져와서 디버그 창에 표시
+            while (!downloadDependenciesHandle.IsDone)
+            {
+                // 현재 다운로드 상태가 담긴 DownloadStatus 타입 오브젝트 가져오기
+                DownloadStatus downloadStatus =
+                    downloadDependenciesHandle.GetDownloadStatus();
+                Debug.Log($"다운로드해야 할 전체 크기 : {downloadStatus.TotalBytes}"); // 전체 다운로드 용량
+                Debug.Log($"현재 다운로드된 크기 : {downloadStatus.DownloadedBytes}"); // 현재까지 다운로드된 용량
+                Debug.Log($"진행도 : {downloadStatus.Percent}"); // 현재 다운로드 용량 / 전체 다운로드 용량의 비율이겠지?
+                yield return null; // yield 문으로 의존성 다운로드 오퍼레이션이 완료될 때까지 while 반복문을 매 프레임마다 실행토록 함
+            }
+
+            // 이제 의존성 다운로드 오퍼레이션이 완료되었기 때문에, 해당 오퍼레이션을 더 이상 실행하지 않아도 되므로, 메모리를 해제시킴.
+            Addressables.Release(downloadDependenciesHandle);
+            Debug.Log("다운로드 끝!");
+        }
+    }
 }
