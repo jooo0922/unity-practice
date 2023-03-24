@@ -14,6 +14,14 @@ public class AddressableSystemManager : MonoBehaviour
     {
         StartCoroutine(PlayMainMusicRoutine());
         StartCoroutine(LoadAllWeaponsRoutine(true));
+
+        // 비동기로 프리팹 에셋을 가져와서 게임 오브젝트 복사본으로 인스턴스화시키는 오퍼레이션 핸들을 반환하는 어드레서블 API 
+        var operationHandle = Addressables.InstantiateAsync("monster_red");
+        operationHandle.Completed += handle =>
+        {
+            GameObject createdMonster = handle.Result;
+            Debug.Log($"몬스터가 생성됨! {createdMonster.name}"); // JS 의 템플릿 리터럴과 유사한 c#의 문자열 보간 문법
+        };
     }
 
     // Update is called once per frame
