@@ -4,10 +4,13 @@ using System; // 익명함수 콜백을 등록하기 위한 Action 타입 변수
 using UnityEngine;
 using UnityEngine.AddressableAssets; // 어드레서블 시스템 API 사용을 위해 선언된 네임스페이스
 using UnityEngine.ResourceManagement.AsyncOperations; // 비동기 처리 사용을 위해 선언된 네임스페이스
+using UnityEngine.ResourceManagement.ResourceLocations; // IResourceLocation 타입을 사용하기 위해 선언된 네임스페이스
 
 public class AddressableSystemManager : MonoBehaviour
 {
     private AudioSource audioSource;
+
+    private List<Sprite> allIconSprites = new List<Sprite>(); // 스프라이트 타입의 어드레서블 에셋을 로드해와서 모아둘 리스트
 
     // Start is called before the first frame update
     void Start()
@@ -78,5 +81,31 @@ public class AddressableSystemManager : MonoBehaviour
         IList<GameObject> loadedWeaponPrefabs = operationHandle.Result; // 비동기 오퍼레이션 결과값인 무기 게임 오브젝트 리스트를 변수에 할당
 
         // 로드된 무기 loadedWeaponPrefabs 을 사용하는 나머지 코드
+    }
+
+    // 코루틴 메서드로 어드레스(키)에 대응하는 IResourceLocation 리스트를 비동기로 로드하기
+    // 거기에는 키에 대응하는 에셋들의 위치와 정보가 있는데, 에셋의 타입이 스프라이트면 해당 에셋을 실제로 비동기 로드해오는 로직까지 추가
+    private IEnumerator LoadAllIconSprites()
+    {
+        List<string> keys = new List<string>() { "ui", "icon" };
+        AsyncOperationHandle<IList<IResourceLocation>> locationOperationHandle =
+            Addressables.LoadResourceLocationsAsync(keys); // IResourceLocation 객체를 비동기로 로드하는 오퍼레이션 핸들을 반환.
+
+        yield return locationOperationHandle;
+
+        IList<IResourceLocation> locations = locationOperationHandle.Result; // 위의 키 목록에 대응하는 IResourceLocation 리스트를 비동기로 가져옴.
+
+        // IResourceLocation 리스트를 사용하는 예시 -> 특정 타입의 에셋에 해당할 경우 실제 에셋을 비동기로 로드해 옴.
+        foreach (var location in locations)
+        {
+            // IResourceLocation 객체에 명시된 리소스 타입이 Sprite 일 경우애만 실제 에셋을 비동기로 로드해 옴.
+            if (location.ResourceType == typeof(Sprite))
+            {
+                AsyncOperationHandle<Sprite> loadOperationHandle =
+                    Addressables.LoadAssetAsync<Sprite>(location); // Addressable.LoadAssetAsync() 메서드는 IResourceLocation 타입도 그대로 인자로 전달할 수 있음.
+                yield return loadOperationHandle; // 실제 비동기로 스프라이트를 로드함
+                allIconSprites.Add(loadOperationHandle.Result); // 로드한 스프라이트 에셋을 리스트 멤버변수에 추가함.
+            }
+        }
     }
 }
