@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System; // 익명함수 콜백을 등록하기 위한 Action 타입 변수 선언을 위해 선언된 네임스페이스 
 using UnityEngine;
 using UnityEngine.AddressableAssets; // 어드레서블 시스템 API 사용을 위해 선언된 네임스페이스
+using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations; // 비동기 처리 사용을 위해 선언된 네임스페이스
 using UnityEngine.ResourceManagement.ResourceLocations; // IResourceLocation 타입을 사용하기 위해 선언된 네임스페이스
 
@@ -19,6 +20,7 @@ public class AddressableSystemManager : MonoBehaviour
         StartCoroutine(LoadAllWeaponsRoutine(true));
         StartCoroutine(LoadAllIconSprites());
         StartCoroutine(loadMusicRoutine());
+        StartCoroutine(UpdateCatalogsRoutine());
 
         // 비동기로 프리팹 에셋을 가져와서 게임 오브젝트 복사본으로 인스턴스화시키는 오퍼레이션 핸들을 반환하는 어드레서블 API 
         var operationHandle = Addressables.InstantiateAsync("monster_red");
@@ -178,5 +180,18 @@ public class AddressableSystemManager : MonoBehaviour
             Addressables.Release(downloadDependenciesHandle);
             Debug.Log("다운로드 끝!");
         }
+    }
+
+    // 코루틴 메서드에서 앱에 캐싱되어 있는 기본 카탈로그를 업데이트하기
+    private IEnumerator UpdateCatalogsRoutine()
+    {
+        // 원격 서버의 카탈로그 파일을 다운로드해서 앱 내부에 캐싱된 전체 카탈로그들을 업데이트함. (카탈로그 이름 컬렉션을 입력하지 않았으므로, 전체 카탈로그가 업데이트됨.)
+        AsyncOperationHandle<List<IResourceLocator>> updateCatalogsOperationHandle =
+            Addressables.UpdateCatalogs(autoReleaseHandle: false);
+
+        yield return updateCatalogsOperationHandle; // 카탈로그 업데이트 오퍼레이션 핸들 실행 대기
+        // .Result 에는 업데이트된 각 카탈로그들을 참조해서 IResourceLocation 객체를 만드는 리소스 로케이터들이 저장된 리스트가 담겨있음!
+
+        Addressables.Release(updateCatalogsOperationHandle); // 카탈로그 업데이트 오퍼레이션 핸들 메모리 해제
     }
 }
