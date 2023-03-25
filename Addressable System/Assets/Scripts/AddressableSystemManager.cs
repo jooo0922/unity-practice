@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System; // 익명함수 콜백을 등록하기 위한 Action 타입 변수 선언을 위해 선언된 네임스페이스 
 using UnityEngine;
 using UnityEngine.AddressableAssets; // 어드레서블 시스템 API 사용을 위해 선언된 네임스페이스
-using UnityEngine.AddressableAssets.ResourceLocators;
+using UnityEngine.AddressableAssets.ResourceLocators; // 리소스 로케이터 타입을 선언하기 위해 선언된 네임스페이스
 using UnityEngine.ResourceManagement.AsyncOperations; // 비동기 처리 사용을 위해 선언된 네임스페이스
 using UnityEngine.ResourceManagement.ResourceLocations; // IResourceLocation 타입을 사용하기 위해 선언된 네임스페이스
 
@@ -193,5 +193,36 @@ public class AddressableSystemManager : MonoBehaviour
         // .Result 에는 업데이트된 각 카탈로그들을 참조해서 IResourceLocation 객체를 만드는 리소스 로케이터들이 저장된 리스트가 담겨있음!
 
         Addressables.Release(updateCatalogsOperationHandle); // 카탈로그 업데이트 오퍼레이션 핸들 메모리 해제
+    }
+
+    // 코루틴 메서드에서 원격 서버의 새로운 카탈로그 파일을 로드하여 추가
+    // -> 해당 카탈로그에 저장된 어드레서블 에셋 키에 해당하는 에셋과 그 의존성 에셋들을 전부 미리 다운로드하기
+    public IEnumerator LoadAdditionalContents()
+    {
+        // 추가 카탈로그 로드
+        AsyncOperationHandle<IResourceLocator> loadCatalogOperation =
+            Addressables.LoadContentCatalogAsync("https://cdn-url.com/new_dlc_catalog");
+        yield return loadCatalogOperation; // 새로운 카탈로그 추가로 로드하는 오퍼레이션 핸들 실행 대기
+
+        // 새로 로드된 카탈로그를 참조하는 리소스 로케이터를 변수에 저장
+        IResourceLocator resourceLocator = loadCatalogOperation.Result;
+
+        // 새로 로드된 카탈로그에서 참고할 수 있는 에셋 키(어드레스) 목록을 리소스 로케이터에서 알고 있기 때문에,
+        // 리소스 로케이터로부터 해당 키 목록에 접근해서 디버그 창에 출력
+        Debug.Log($"추가로 사용할 수 있게 된 키들 : {string.Join(",", resourceLocator.Keys)}");
+
+        // 추가 로드된 카탈로그에서 참고할 수 있는 에셋들의 다운로드 용량을 확인하기
+        AsyncOperationHandle<long> getDownloadSizeOperation =
+            Addressables.GetDownloadSizeAsync(resourceLocator.Keys); // 추가 로드된 카탈로그에 등록된 키에 대응되는 에셋들의 다운로드 용량을 비동기로 가져오는 오퍼레이션 핸들 저장
+        yield return getDownloadSizeOperation; // 비동기 오퍼레이션 실행 대기
+
+        // 추가 로드된 카탈로그에 등록된 에셋들의 다운로드 용량을 디버그 창에 출력
+        Debug.Log($"추가 카탈로그에 등록된 콘텐츠 다운로드 크기 : {getDownloadSizeOperation.Result}");
+
+        // 추가 카탈로그에 등록된 에셋들의 키를 입력해서 해당 에셋들과 의존성 에셋들을 미리 다운로드
+        yield return Addressables.DownloadDependenciesAsync(resourceLocator.Keys, true); // 의존성 다운로드 완료 후, 오퍼레이션 핸들 자동 메모리 해제
+
+        Addressables.Release(getDownloadSizeOperation); // 다운로드 용량을 비동기로 가져오는 오퍼레이션 핸들 메모리 제거
+        Addressables.Release(loadCatalogOperation); // 새로운 카탈로그를 로드해오는 비동기 오퍼레이션 핸들 메모리 제거
     }
 }
