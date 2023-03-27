@@ -10,26 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Coin Group
+  m_Name: Content Update
   m_EditorClassIdentifier: 
-  m_GroupName: Coin Group
+  m_GroupName: Content Update
   m_Data:
     m_SerializedData: []
-  m_GUID: b9388d4bdc03e44f3b591fbf1352fc72
+  m_GUID: 8449d3ebcbe104fad9a8ee0c5d09753a
   m_SerializeEntries:
-  - m_GUID: 4137e6fec43c3437888834126468c4c4
-    m_Address: coin_01
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    - coin
-  - m_GUID: fc9dcdb733a0049bbbfaa1629a6466a7
-    m_Address: music_01
+  - m_GUID: 5ce8b49694a584ba98293b814dab13d4
+    m_Address: AmmoPack
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: b6da9d30f56b84790896e2bbf822cc33, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: af2d29976e99243f38195aef8aee97c3, type: 2}
-    - {fileID: 11400000, guid: fda019017ca3f4fda9663b69b90eebb4, type: 2}
+    - {fileID: 11400000, guid: 05d2dbc15e01a4829b1e452481ac5335, type: 2}
+    - {fileID: 11400000, guid: 475203965535343538b5f8da3c45a685, type: 2}
