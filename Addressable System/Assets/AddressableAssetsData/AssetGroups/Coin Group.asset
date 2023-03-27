@@ -27,6 +27,10 @@ MonoBehaviour:
     m_Address: music_01
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 5ce8b49694a584ba98293b814dab13d4
+    m_Address: AmmoPack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: b6da9d30f56b84790896e2bbf822cc33, type: 2}
   m_SchemaSet:
